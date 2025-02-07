@@ -4,30 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário</title>
-
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .form-container {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 20px 10px 10px rgba(0, 0, 0, 0.1);
+            margin: 30px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+        input {
+            width: 87;
+            padding: 9px;
+            margin-top: 10px;
+            border: 2px solid #000000;
+            border-radius: 8px;
+        }
+        .hint {
+            font-size: 12px;
+            color: rgb(119, 55, 55);
+            margin-top: 2px;
+        }
+        button {
+            margin-top: 15px;
+            width: 87%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-    <forms>
-         <label>
-                Nome:
-            <input type= "text" />
-         </label>
-         <br>
-         <br>
-        <label>
-              E-mail:
-              <input type="email" />
-              
-        </label>
-        <br>
-        <br>
-    <label>
-        Senha:
-        <input type = "password" />
-    </label>
-    <br>
-    <br>
-    <button type= "submit">Enviar</button>
-    </forms>
+    <div class="form-container">
+        <form onsubmit="return validateForm()">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+            <div class="hint">Exemplo: João Silva</div>
+
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required>
+            <div class="hint">Exemplo: exemplo@gmail.com</div>
+            <span class="error" id="emailError"></span>
+
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" name="telefone" required>
+            <div class="hint">Exemplo: (11) 91234-5678</div>
+            <span class="error" id="telefoneError"></span>
+
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" name="cpf" required>
+            <div class="hint">Exemplo: 123.456.789-00</div>
+            <span class="error" id="cpfError"></span>
+
+            <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" name="endereco" required>
+            <div class="hint">Exemplo: Rua das Flores, 123, São Paulo</div>
+            
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" required>
+            <div class="hint">Mínimo de 6 caracteres</div>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            let email = document.getElementById("email").value;
+            let emailError = document.getElementById("emailError");
+            let emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+            let telefone = document.getElementById("telefone").value;
+            let telefoneError = document.getElementById("telefoneError");
+            let telefonePattern = /^\(\d{2}\) \d{5}-\d{4}$/;
+
+            let cpf = document.getElementById("cpf").value;
+            let cpfError = document.getElementById("cpfError");
+            let cpfPattern = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+
+            let valid = true;
+
+            if (!emailPattern.test(email)) {
+                emailError.textContent = "O e-mail deve terminar com @gmail.com";
+                valid = false;
+            } else {
+                emailError.textContent = "";
+            }
+
+            if (!telefonePattern.test(telefone)) {
+                telefoneError.textContent = "O telefone deve estar no formato (XX) XXXXX-XXXX";
+                valid = false;
+            } else {
+                telefoneError.textContent = "";
+            }
+
+            if (!cpfPattern.test(cpf)) {
+                cpfError.textContent = "O CPF deve estar no formato XXX.XXX.XXX-XX";
+                valid = false;
+            } else {
+                cpfError.textContent = "";
+            }
+
+            return valid;
+        }
+    </script>
 </body>
 </html>
